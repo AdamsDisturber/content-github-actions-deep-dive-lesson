@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up function
-        uses: actions/set-up-python@v2
+        uses: actions/set-up-python@v4
         with:
           python-version: 3.8
       - run: |
@@ -23,7 +23,7 @@ jobs:
       - run: |
           cd function
           zip -r ../${{ github.sha }}.zip .
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: zipped-bundle
           path: ${{ github.sha }}.zip
