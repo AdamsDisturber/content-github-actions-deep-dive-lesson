@@ -29,6 +29,7 @@ jobs:
             whoami
       - run: |
             touch ${HOME}/lint.txt
+            ls -lah ${HOME}
 
   build:
     runs-on: ubuntu-latest
@@ -64,6 +65,7 @@ jobs:
             whoami
       - run: |
             touch ${HOME}/build.txt
+            ls -lah ${HOME}
 
   publish:
     runs-on: ubuntu-latest
@@ -90,6 +92,7 @@ jobs:
             whoami
       - run: |
             touch ${HOME}/publish.txt
+            ls -lah ${HOME}
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
