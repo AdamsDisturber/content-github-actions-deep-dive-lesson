@@ -27,6 +27,8 @@ jobs:
             ls -lah
             pwd
             whoami
+      - run: |
+            touch ${HOME}/lint.txt
 
   build:
     runs-on: ubuntu-latest
@@ -60,9 +62,12 @@ jobs:
             ls -lah
             pwd
             whoami
+      - run: |
+            touch ${HOME}/build.txt
 
   publish:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - run: |
             ls -lah
@@ -83,3 +88,18 @@ jobs:
             ls -lah
             pwd
             whoami
+      - run: |
+            touch ${HOME}/publish.txt
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: zipped-bundle
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ github.sha }}.zip
+          asset_name: source_code_with_libraries.zip
+          asset_content_type: application/zip
